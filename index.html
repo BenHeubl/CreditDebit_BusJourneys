@@ -120,7 +120,7 @@ div.tooltip {
  <script type="text/javascript">
 
     var margin = {top: 20, right: 100, bottom: 30, left: 100},
-        w = 800 - margin.left - margin.right,
+        w = 600 - margin.left - margin.right,
         h = 600 - margin.top - margin.bottom,
         x = d3.time.scale().range([0, w]),
         y = d3.scale.linear().range([h, 0]);
@@ -251,8 +251,8 @@ function redraw() {
                 .style("opacity", 1);    
             div .html(
                 d.name)
-                .style("left", 810 + "px")             
-                .style("top", 100 + "px")
+                // .style("left", 810 + "px")             
+                // .style("top", 100 + "px")
                 
             })
 
