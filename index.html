@@ -6,6 +6,71 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="description" content="Bus Journeys : Bus Journeys and Credit/Debit Card Payments: Data Journalism Story With Data From the UK Cards Association">
 
+    <style type="text/css">
+
+/*body {
+  font: 12px helvetica;
+  background: #F2F2F2;
+}
+*/
+
+}
+
+.axis path {
+  fill: none;
+  stroke: none;
+  stroke-width: 2px;
+  shape-rendering: crispEdges;
+}
+.axis line {
+  fill: none;
+  stroke: none;
+  stroke-width: 2px;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  fill: none;
+  stroke: none;
+  shape-rendering: crispEdges;
+}
+
+.y.axis path {
+  fill: none;
+  stroke: none;
+  shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+  stroke-width: 4px;
+}
+
+.country {opacity: 0.4;
+
+}
+
+div.tooltip {
+    position: absolute;    
+    text-align: left; 
+    width: 300px;    
+    height: 150px;        
+    padding: 2px;    
+    font: 30px helvetica; 
+    color: black;  
+    background: none;    
+    border: 0px;                    
+    border-radius: 2px;
+}
+
+.country:hover {
+
+  opacity:1,
+
+}
+
+</style>
+
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
     <title>Bus Journeys</title>
@@ -32,7 +97,220 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>How did “contactless payment” affect how people buy their bus tickets?</h3>
+
+
+  <div>
+      <input type="checkbox" id="bric" onclick="briclight()">Credit Transactions</input>
+      <input type="checkbox" id="mist" onclick="mistlight()">Debit Transactions</input>
+      <input type="checkbox" id="bric1" onclick="briclight()">Credit Trend</input>
+      <input type="checkbox" id="mist2" onclick="mistlight()">Debit Trend</input>
+  </div>
+  <p id="menu" ><br>Select an Option: <select>
+    <option value="Volume">Volume (Number of Transactions for Bus Journeys)</option>
+    <option value="Value">Value (Overall Value in Pounds Sterling per Month Spent on Bus Journeys)</option>
+    <option value="Average Value Per Card Transaction">Average Value Per Card Transaction</option>
+    
+    </select>
+
+<div id="example"></div>
+<div id="tooltips"></div>
+
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+
+
+ <script type="text/javascript">
+
+    var margin = {top: 20, right: 100, bottom: 30, left: 100},
+        w = 800 - margin.left - margin.right,
+        h = 600 - margin.top - margin.bottom,
+        x = d3.time.scale().range([0, w]),
+        y = d3.scale.linear().range([h, 0]);
+        var parseDate = d3.time.format("%d/%m/%y").parse;
+        var formatTime = d3.time.format("%d %B %Y");// Format tooltip date / time
+
+        
+
+    var color = d3.scale.ordinal()
+    .range(["#512CDE","#91893C", "#D5D4DB", "#D5D4DB", "#F2F2F2", "#F2F2F2"]);
+    
+    var countries,
+        filtered,
+        transpose;
+    
+ 
+    var line = d3.svg.line()
+       .interpolate("basis")
+       .x(function(d) { return x(d.year); })
+       .y(function(d) { return y(d.stat); });
+    
+    var svg = d3.select("body").append("svg")
+        .attr("width", w + margin.left + margin.right)
+        .attr("height", h + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+       svg.append("svg:g")
+        .attr("class", "x axis")
+        .style("fill", "black");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        svg.append("svg:g")
+        .attr("class", "y axis");
+        // .style("stroke", "black" )
+
+        // Define 'div' for tooltips
+    var div = d3.select("body")
+        .append("div") 
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+    
+    var menu = d3.select("#menu select")
+    .on("change", change);    
+          
+
+d3.csv("busdata.csv", function(csv) {
+    countries = csv;
+        redraw();
+    });
+
+d3.select(window)
+    .on("keydown", function() { altKey = d3.event.altKey; })
+    .on("keyup", function() { altKey = false; });
+
+var altKey;
+
+   
+function change() {
+  clearTimeout(timeout);
+
+  d3.transition()
+      .duration(altKey ? 7500 : 1500)
+      .each(redraw);
+}
+
+function redraw() {
+    
+    var nested = d3.nest()
+    .key(function(d) { return d.VolValPer; })
+    .map(countries)
+    
+   
+    var series = menu.property("value");
+  
+    var data = nested[series];
+  
+    var keyring = d3.keys(data[0]).filter(function(key) { 
+          return (key !== "VolValPer" && key !== "year");
+      });
+
+
+    var transpose = keyring.map(function(name) {
+            return {
+              name: name,
+              values: data.map(function(d) {
+                return {year: parseDate(d.year), stat: +d[name]};
+              })
+            };
+        });
+
+    x.domain([
+    d3.min(transpose, function(c) { return d3.min(c.values, function(v) { return v.year; }); }),
+    d3.max(transpose, function(c) { return d3.max(c.values, function(v) { return v.year; }); })
+  ]);
+
+    y.domain([
+    d3.min(transpose, function(c) { return d3.min(c.values, function(v) { return v.stat; }); }),
+    d3.max(transpose, function(c) { return d3.max(c.values, function(v) { return v.stat; }); })
+  ]);
+
+    var country = svg.selectAll(".country")
+      .data(transpose);
+     
+ 
+    var countryEnter = country.enter().append("g")
+      .attr("class", "country")
+      .attr("id", function(d) { return d.name; });
+    
+    countryEnter.append("path")
+      .attr("class", "line")
+      .attr("d", function(d) { return line(d.values); })
+      .style("stroke", function(d) { return color(d.name); })
+      .attr("stroke-width", 1)
+
+       .on("mouseover", function(d) {   
+        d3.select(this).transition().duration(50).style("stroke", "magenta").attr("stroke-width", 3);
+            div.transition()
+                .duration(500)    
+                .style("fill", 0);
+            div.transition()
+                .duration(200)    
+                .style("opacity", 1);    
+            div .html(
+                d.name)
+                .style("left", 810 + "px")             
+                .style("top", 100 + "px")
+                
+            })
+
+        .on("mouseout", function(){ 
+                d3.select(this).transition().duration(100).style("stroke", function(d) { return color(d.name); }).attr("stroke-width", 1); 
+            });
+
+
+    countryEnter.append("text")
+     .attr("class", "names")
+     .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+     .attr("transform", function(d) { return "translate(" + x(d.value.year) + "," + y(d.value.stat) + ")"; })
+     .attr("x", 4)
+     .attr("dy", ".35em")
+     .text(function(d) { return d.name; });
+
+    var countryUpdate = d3.transition(country);
+    
+    countryUpdate.select("path")
+      .attr("d", function(d) { return line(d.values); });
+    
+    countryUpdate.select("text")
+       .attr("transform", function(d) { return "translate(" + x(d.values[d.values.length - 1].year) + "," + y(d.values[d.values.length - 1].stat) + ")"; });
+  
+      d3.transition(svg).select(".y.axis")
+          .call(yAxis);   
+          
+      d3.transition(svg).select(".x.axis")
+            .attr("transform", "translate(0," + h + ")")
+          .call(xAxis);
+          
+}
+
+var timeout = setTimeout(function() {
+  menu.property("value", "ENEUSE").node().focus();
+  change();
+}, 20000);
+
+function briclight() {
+    var chkbox = document.getElementById("bric");
+    if (chkbox.checked) {
+        document.getElementById("Credit").style.cssText = "opacity:1;"
+    } else { 
+        document.getElementById("Credit").style.cssText = "";
+    }};
+    
+function mistlight() {
+    var chkbox = document.getElementById("mist")
+    if (chkbox.checked) {
+        document.getElementById("Debit").style.cssText = "opacity:1;"
+        
+    } else { 
+        document.getElementById("Debit").style.cssText = "";
+    }};
+  </script>
+
 
 <ul>
 <li>In 2013, the UK Card Association supported TFL and the London public in 7,700,000 Contactless Bus journeys. This is still fairly low if one considers the sheer amount of journeys the local bus network in London carries. According to TFL the network carries over 1.8 billion passenger journeys per year. This makes every 233 bus journey a contactless bus journey. 
