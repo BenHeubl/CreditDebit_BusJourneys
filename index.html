@@ -14,8 +14,6 @@
 }
 */
 
-}
-
 .axis path {
   fill: none;
   stroke: none;
@@ -144,7 +142,7 @@ div.tooltip {
        .x(function(d) { return x(d.year); })
        .y(function(d) { return y(d.stat); });
     
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("div#example").append("svg")
         .attr("width", w + margin.left + margin.right)
         .attr("height", h + margin.top + margin.bottom)
         .append("g")
@@ -165,7 +163,7 @@ div.tooltip {
         // .style("stroke", "black" )
 
         // Define 'div' for tooltips
-    var div = d3.select("body")
+    var div = d3.select("div#tooltips")
         .append("div") 
         .attr("class", "tooltip")
         .style("opacity", 0);
