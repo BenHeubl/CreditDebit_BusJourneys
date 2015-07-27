@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Bus Journeys : Bus Journeys and Credit/Debit Card Payments: Data Journalism Story With Data From the UK Cards Association">
+    <meta name="description" content="Bus Journeys & Contactless Payments : Bus Journeys and Credit/Debit Card Payments: Data Journalism Story With Data From the UK Cards Association">
 
     <style type="text/css">
 
@@ -79,23 +79,32 @@ div.tooltip {
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/BenHeubl/CreditDebit_BusJourneys">View on GitHub</a>
+          <a id="forkme_banner" href="https://github.com/BenHeubl/CreditDebit_BusJourneys">D3.js Project: On GitHub</a>
 
-          <h1 id="project_title">Bus Journeys</h1>
-          <h2 id="project_tagline">Bus Journeys and Credit/Debit Card Payments: Data Journalism Story With Data From the UK Cards Association</h2>
+          <h1 id="project_title">UK Buses & Contactless Payment</h1>
+          <h2 id="project_tagline">Data Journalism Stories With Data From the UK Cards Association</h2>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/BenHeubl/CreditDebit_BusJourneys/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/BenHeubl/CreditDebit_BusJourneys/tarball/master">Download this project as a tar.gz file</a>
-            </section>
+            
         </header>
     </div>
 
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>
-<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>How did “contactless payment” affect how people buy their bus tickets?</h3>
+
+<h1>
+<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>How the Introduction of Contactless Payment Affects How People Buy Their Bus Tickets?</h1>
+
+<img src="bus.gif" alt="retail trends gif" height="576" width="637">
+
+
+<p>Trends to be found in the data<br>
+1.<code>How do people pay for their bus journeys?
+</code><br>
+2.<code>On average, how much money is being spent on a transaction?
+</code><br>
+3.<code>How did the introduction of contactless payment method on UK bus networks affect the situation of credit and debit card payments? </code>
+</p>
 
 
   <div>
@@ -130,7 +139,7 @@ div.tooltip {
         
 
     var color = d3.scale.ordinal()
-    .range(["#512CDE","#91893C", "#D5D4DB", "#D5D4DB", "#F2F2F2", "#F2F2F2"]);
+    .range(["#08088A","#FF0040", "#D5D4DB", "#D5D4DB", "#F2F2F2", "#F2F2F2"]);
     
     var countries,
         filtered,
@@ -252,7 +261,7 @@ function redraw() {
             div .html(
                 d.name)
                 .style("left", 600 + "px")             
-                .style("top", 400 + "px")
+                .style("top", 1200 + "px")
                 
             })
 
@@ -310,16 +319,43 @@ function mistlight() {
   </script>
 
 
+<h3><a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span class="octicon octicon-link"></span></a>One Out of 233 Bus Journeys Is a Contactless One</h3>
+<p>In 2013, the UK Card Association supported TFL and the London public in 7,700,000 contactless bus journeys. This is still fairly low if one considers the sheer amount of journeys the local bus network in London carries. According to TFL the network makes over 1.8 billion passenger journeys possible per year. On average, this makes every 233rd bus journey a contactless one. 
+<br>
+</p>
+<h2><a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span class="octicon octicon-link"></span></a>In Addition...</h2>
+<br>
+<p>
 <ul>
-<li>In 2013, the UK Card Association supported TFL and the London public in 7,700,000 Contactless Bus journeys. This is still fairly low if one considers the sheer amount of journeys the local bus network in London carries. According to TFL the network carries over 1.8 billion passenger journeys per year. This makes every 233 bus journey a contactless bus journey. 
-But do people use it for their ride to work or to the park? Yes and no. They seem to used it right after the introduction of the contactless payment option for buses in London (July, 2014).</li>
+<li>In March 2014, the number of debit and card payments for bus journeys reached almost 3 million. Then only five months later the amount of transactions dropped to by almost 50 percent. Was this due to the introduction of the contactless payment option and the abolishment of cash payments on buses? </li>
 <br>
-<li>In March 2014, the number of debit card payments for bus journeys reached almost 3 million. So people seemed to have spend over-dramatically via their debit cards. Then only five months later the amount if payments dropped to almost 50%. This could have been due to the introduction of the contactless payment and the abolishment of cash payments on buses. According to TFL, bus travellers who pay cash were paying more than others before this change. Cash fares on buses cost £2.40. Now with contactless payments, the 95p for the cash payments can be saved via the use of the Oyster card or the contactless card option. </li>
+<li>According to TFL, bus travellers who pay cash were paying more than others previously to the abolishment of cash payments on buses. Cash fares cost £2.40 back then. Now with the contactless payment option, the 95p for the cash payments can be saved via the use of the Oyster card or a contactless payment card option such as MBNA's low rate credit card.</li>
 <br>
-<li>In august of 2014, we have seen a peak for the average value spent on each transition. With 55£ for credit card payments and 31£ for debit card payments in August 2014, the public spend significantly more money via their plastic cards. sdlnvldfnbvdfklnzbkln<br>
-</li>
-</ul>
+<li>In August of 2014, we have seen a peak for the average value spent on each transaction. With 55£ for credit card payments and 31£ for debit card payments in August 2014, there was a significant increase.</li>
 
+<br>
+<li>Both, the average transaction value for debit and credit card payments seemed to have slowd  down over the past years. Both did also experience a sharp drop in the beginning of 2014, and a suprised with a peak a few months for credit and debit transactions of 15£ and 20£ respectively.</li>
+</ul>
+</p>
+
+<iframe width="675.5" height="370.99999999999994" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1EEhQbPVC3pvl3RRs76r5IwwsoOr0ucSSDWbyy-wJqSo/pubchart?oid=550591477&amp;format=interactive"></iframe>
+
+<h3><a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview Retail Industries and Debit Card Transactions</h3>
+<p>
+Other retail industries have seen a significant change how much value is being spent via credit or debit cards too. 
+<br>To find out how other industries have changed since 2012, you can click <a href="https://www.youtube.com/watch?v=4jogbom8v4U" class="user-mention">here</a> and play around with the interactive visualisaton. 
+</p>
+
+<img src="retail.gif" alt="retail trends gif" height="411" width="943">
+
+
+
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/BenHeubl/OnlineShopping_CreditDebit">Bus Journeys and Credit/Debit transaction data</a> by <a href="https://github.com/BenHeubl">BenHeubl</a>.</span>
+      </footer>
+
+    </section>
     
 
   </body>
